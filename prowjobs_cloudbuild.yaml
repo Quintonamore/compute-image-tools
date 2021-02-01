@@ -1,4 +1,4 @@
-timeout: 1800s
+timeout: 3600s
 
 options:
   env:
@@ -60,6 +60,14 @@ steps:
   - --destination=gcr.io/$PROJECT_ID/gce-ovf-import-tests:$COMMIT_SHA
   - --context=/workspace
   - --dockerfile=gce_ovf_import_tests.Dockerfile
+  - --build-arg=PROJECT_ID=$PROJECT_ID
+- id: gce-ovf-export-tests
+  name: 'gcr.io/kaniko-project/executor:v0.22.0'
+  args:
+  - --destination=gcr.io/$PROJECT_ID/gce-ovf-export-tests:latest
+  - --destination=gcr.io/$PROJECT_ID/gce-ovf-export-tests:$COMMIT_SHA
+  - --context=/workspace
+  - --dockerfile=gce_ovf_export_tests.Dockerfile
   - --build-arg=PROJECT_ID=$PROJECT_ID
 - id: gce-windows-upgrade-tests
   name: 'gcr.io/kaniko-project/executor:v0.22.0'
